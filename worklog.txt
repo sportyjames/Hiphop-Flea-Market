@@ -1,0 +1,44 @@
+1. get started with react 
+- create react app 
+- create header and footer component using react bootstrap to style 
+- style using react bootstrap, and bootstrap theme from Bootswatch
+- within index.js, import the bootswatch 
+- within App.js, import react bootstrap
+- header, fonter, import react bootstrap
+- index.css
+    - make the fonter to bottom
+        - main: min height 80vh
+- style header
+    - add react bootstrap navbar to header 
+- add fontawesome to add icons 
+    - font-awesome 
+
+2. build the home page 
+- output product data into home page 
+- create product component
+- create rating component
+- style components
+
+3. Implement react router 
+- npm i react-router-dom react-router-bootstrap
+- in App.js, import react-router-dom
+- use the router to wrap the header component
+- now can set different routes 
+    - we can place this component with the route instead 
+- add home route
+    - exact only for home page 
+- add product route 
+    - :id
+- use Link from react-router-dom
+- now there will not be reloading on the page 
+- also Link it for header and footer 
+    - use LinkContainer from react-router-bootstrap
+
+4. Product Screen Page 
+- p._id == match.params.id
+    - id will be get from the url 
+- 
+
+
+
+            
