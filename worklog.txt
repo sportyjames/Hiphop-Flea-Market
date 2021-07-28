@@ -183,10 +183,127 @@ Set the media urls
     - goto urls.py
         - from django.conf import settings 
         - urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
-    
 
-    
-    
+Now we want to make queries to db 
+- import models in views.py 
+- serialize the data from db 
+    - create a serializer for every single model we want to return 
+        - it is gonna wrap our model and turn that into JSON format 
+    - return serialized data 
+- Now we see the real data from backend instead of hard code front end data
+
+
+Redux:
+- two kinds of state:
+    - component states
+        - has to do with specific component 
+        - e.g. dropdown menu, slider 
+        - menu open or close depending on the component state 
+    - global states
+        - what redux is for 
+        - e.g. products 
+        - we might access/add/update/delete product 
+        - so we want it available to all components 
+    - reducers functions
+        - change states 
+        - accept actions 
+        - responsible for manipulating and passing the state down to components 
+    - actions
+        - objects that represent the intention to change a piece of state 
+    - action creators:
+        - functions that will dispatch those actions 
+    - Example: 
+        - we may have an action creator function called getProduct
+        - in the action creator, we make a fetch request to the backend 
+        to get data using axios and we get data back and dispatch an action
+        to reducer and attach payload to it. The payload will have the fetched 
+        data
+        - Now in the reducer, we can assign that payload data to the state and we 
+        can pass it down to any components that ask for it. 
+        - think of state as a cloud hovering over app, when we need sth to happen,
+        we click a button and fetch some data from the server and then display it.
+        We have to create an action or an action creator to dispatch specific action 
+        to reducer then the reducer pass it down to component
+
+Install redux dev tool
+- let us to see the entire state/stores/different actions that are firing off in our browser 
+- it is gonna make working with our store a lot easier 
+
+Make some install 
+- redux react-redux redux-thunk redux-devtools-extension
+- redux-thunk allow async request from actioncreator
+- redux-devtools-extension: allow us to connect store to the browser extension
+ 
+Create our store  
+- create store.js 
+- import libraries 
+    - createStore: create our store
+    - combineReducers: combine reducers into one reducer and apply it to our store 
+    - thunk 
+    - devtools
+- create store
+    - parameter
+        - reducer 
+        - initialState
+        - composewithdevtools
+
+Export store  
+- import to index.js 
+- wrap our entire store with provider
+    - provider will make the store available to the entire app 
+
+Create Product list actions&reducers
+- goto front-end src 
+    - create a folder for reducers
+- reducers
+    - reducer is a function which basically take in current state and an action of what we want to do with the state. 
+    - manipulate the state with the action 
+    - return a new copy state to store 
+        - create productReducers.js
+            - create productlistReducers
+                - check action.type
+                    - request case, still loading data
+                    - success case, data returned, not laoding anymore, update products with payload
+                    - fail case, update product with failed response
+                    - default value, return initial state
+                - export productlistReducer to store.js 
+                - this reducer has added value to the state. iniital state is {}. Cuz we trigger reducer, we set products to initial state.
+                By using combinedReducer, we trigger the first call of that reducer. The reducer update the state
+                - use constant for the switch case
+                    - so easier to maintain 
+        - add some actions to the reducer, load some data
+            - create action folder
+                - create productActions.js
+                    - create listProducts function
+                        - this replace the api call we make in the home screen 
+                        - once we get the list data, we gonna dispatch our product reducer, where throw in action type and the reducer will update the state 
+                        - redux thunk allow us to create funciton within a function 
+                        - we pass in dispatch
+                            - dispatch is where we gonna use to dispatch those actions(Product constants) 
+                        - dispatch all the actions in order 
+                            - dispatch request
+                            - make api call and load up data
+                            - if success 
+                                - dispatch success
+                            - else 
+                                - catch the error and dispatch fail 
+         
+Bring Redux into home screen 
+- use those actions within our components to fire off those 
+actions and update our redux store 
+- get rid of local state, stuff inside useEffect
+- import useDispatch to fire off actions 
+- import useSelector to select certain parts of our states/redux store 
+    - e.g. we want to access productList state from the redux store, later on there will be more states in redux store to select.
+- fire off our first action 
+    - import the listProduct action first 
+    - call dispatch inside useEffect 
+    - the store is gonna be updated 
+
+
+
+
+
 
 
 
