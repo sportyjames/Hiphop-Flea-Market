@@ -37,7 +37,158 @@
 4. Product Screen Page 
 - p._id == match.params.id
     - id will be get from the url 
-- 
+
+Backend Overview 
+- we do not want static data, we want real data 
+- front end and backend separate 
+- front end send get request, backend query from db, serialize data and return back to front end 
+- restful api 
+- when building for production
+    - turn the entire react project to static file set 
+    - so we call command run build, turn react to static 
+    - add static file to django, django will serve our react project 
+
+Build the backend
+- setup django restful 
+- frontend make call to django 
+- create real database and render real data 
+
+Setup virtual env 
+- let us to keep all the import within one env rather than global 
+- pip list check all the dependency 
+- virtualenv myenv 
+- activate myenv
+    - source myenv/bin/activate
+- pip install django 
+- django-admin startproject backend
+
+Start server 
+- python manage.py runserver
+
+Django
+- normally u seperate project into different apps 
+- in this case, create one app because we just want one API 
+- python manage.py startapp base
+
+Django stuff
+- we gonna work with views.py, where we gonna handle business logic 
+- model.py, where we create our dbs 
+- we need to tell our project about our app 
+    - base.apps.BaseConfig
+- views.py 
+    - create getRoutes
+        - setup how to trigger the this view
+- create urls.py inside base
+- tell urls.py inside django about the urls.py inside base 
+- setup api routes 
+
+Install Django restful framework 
+- pip install djangorestframework
+- goto settings
+- work with rest_framework.decorators and response 
+
+Create api for specific product:
+- getProduct
+
+Connect front end to backend (Important to know)
+- install axios 
+- goto homescreen
+    - import axios 
+    - import useState and useEffect 
+    - define product state 
+        - originally empty 
+    - define useEffect 
+        - make it trigger when component first loads, so second arg is []
+        - write axios code inside useEffect 
+        - make it async 
+        - when it is called, the state changes
+    - We got CORS error 
+        - Django does not allow the call, so we need to configure 
+        - pip install django-cors-headers
+        - goto settings.py
+            - add corsheaders 
+            - add middleware
+            - use CORS_ALLOW_ALL_ORIGINS=True
+            - now should work 
+- go back to package.json and setup proxy
+- goto productscreen 
+
+Database structure (important)
+- use postgre not sqlite
+- migration:
+    - purpose: build out the tables and set up our first database. Once make more changes, then we can make migrations again and Django will update our dbs 
+    - command: python manage.py migrate
+- models.py
+    - where we gonna use it to build our db tables 
+
+- structure
+    - Django provide user model
+    - User one to many relationship to Product cuz user can create multiple product 
+    - Product have multiple reviews 
+    - User can write multiple reviews on different products
+    - user can build out an order(shopping cart)
+    - inside the cart, we can build out order items 
+    - order items need to connect to product 
+    - order need a shipping address
+
+- create user 
+    - python manage.py createsuperuser
+    - we can do it cuz we applied our migrations
+
+
+
+- work with product model 
+    - import user model 
+    - user
+        - foreign key
+        - set on_delete value so that when user who create the product is deleted, do not delete the product
+    - name
+    - ...
+    - make migrations 
+        - python manage.py makemigrations
+    - run migrations 
+        -  python manage.py migrate
+
+- register the product table with admin panel 
+    - admin.py
+        - from .models import Product
+        - admin.site.register(Product)
+    - create str function to turn the object to str 
+
+- work with Review model
+
+- work with order model
+
+- work with orderitem model 
+
+- work with shippingaddress model 
+
+- create migrate and run migration
+
+- Product image field
+    - pip install pillow 
+    - run migrations 
+
+- create a static folder to store images 
+    - create css subfolder
+    - create js folder
+    - create images folder 
+    - goto settings.py to configure the static folder
+        - STATICFILES_DIRS
+        - MEDIA_ROOT = 'static/images'
+
+Set the media urls
+    - goto settings.py 
+        - MEDIA_URL = '/images/'
+    - goto urls.py
+        - from django.conf import settings 
+        - urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
+    
+
+    
+    
+
+
 
 
 
