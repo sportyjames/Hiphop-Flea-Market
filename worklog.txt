@@ -299,14 +299,40 @@ actions and update our redux store
     - import the listProduct action first 
     - call dispatch inside useEffect 
     - the store is gonna be updated 
+- now we can see data within productList 
+    - these are data from database, we are now loading it into redux !!! 
+    - we can see actions fired off from inspector 
+- now we gonna take the data inside productList and render it on homescreen 
+    - we will use useSelector
+        - inside useSelector, get productList 
+        - destruct productList into error, loading, products
+- create a loading message whenever the data is being pulled in and then render out an error message 
+- pass dispatch into useEffect
+
+Message & Loader Component 
+- use react bootstrap component 
+- Loader.js 
+- Message.js 
+
+Product Details Reducers & action
+- load all the product detail data from redux store instead of from component level state 
+- new actions, constants, and reducers 
+- Create constants 
+- Create Reducers 
+- Create actions 
+    - update that state and then call it within our component here 
 
 
+Quality select & add to cart 
+- set Qty state 
 
+Card Reducer & Action 
+- create constants 
+- create reducers 
+- create storage 
 
-
-
-
-
-
+- load the data into local storage 
+- when somebody goes shopping on website, they can add some items to a cart, leave our webiste, and then come back and still see those items in their cart without ever having to create an account
+- goto store to get the data from local storage 
 
             
