@@ -334,5 +334,90 @@ Card Reducer & Action
 - load the data into local storage 
 - when somebody goes shopping on website, they can add some items to a cart, leave our webiste, and then come back and still see those items in their cart without ever having to create an account
 - goto store to get the data from local storage 
+- load the data to initial state 
 
+Add To Cart Functionality 
+
+Cart Screen
             
+Remove items from cart 
+
+Using JSON Web tokens to handle authorization 
+-  we do not want customer update our products 
+- so JSON Web token is used 
+- it is just encoded data bout the user 
+- create a route 
+    - type username password 
+    - get back user info along with tokens
+    - after decoded, we can see expiration date, user_id, token_type
+- add the token to local storage
+- token is here as long as user is logged in 
+
+POSTMAN
+- later on, we gonna send our JSON Web token thru our headers 
+
+JSON Web Token installment and setup 
+- due to restful framework, we have to handle our authentication a little differently than normal django app 
+- use Simple JWT token 
+- django-rest-framework-simplejwt
+    - pip install djangorestframework-simplejwt
+- add rest_framework 
+- api/user/login
+    - if I hit post, it is gonna generate a token for me. 
+    - store the access token inside local storage 
+    - send the token to protect routes, any route that require authentication 
+    - this token is gonna authenticate user for us 
+- we can customize the token expiration date 
+    - the token is gonna expire in 30 days 
+
+JWT customization 
+- how to encode more data with token 
+
+Create User serializer 
+- get back some user data in our API 
+- create a url path for a single user object
+- getUserProfile
+    - cuz using rest API, we are using token based authentication 
+    - serialize the user 
+        - we send get request with authorization token and get back user info
+            - what happened here is we sent this token, this authorization token, 
+            then because of the way we customize things with JSON Web token, and we 
+            configure authentication class to use JSON Web Token. When we send that, 
+            this view gets that token and now we have access to request.user based on 
+            what is inside the token.
+
+Create another User serializer 
+- do the exact same thing that our current serializer does
+- except for this time it's going to generate a refresh token 
+- we are gonna need this for situations when we first register
+when a user reset their account information, we need a new token
+to represent the new user information
+- as we are generating or serializing a user, we are going to
+take that user object and return back another token with the 
+initial response 
+- in the front end, we actually gonna have two tokens when we 
+first register
+
+Protected Routes 
+- userProfile
+    - add another decorator and set permission level 
+- two permission level
+    1. for a user to be authenticated 
+    2. user must be an admin 
+- set some staff permission classes 
+
+Register User 
+- use UserSerializerWithToken
+    - when we register user, we want to return the token right away
+- when we get back token after sending the post request 
+    - This is how we gonna log in a user right away in the front end 
+- try catch prevent duplicated user 
+
+Login with email 
+- 
+
+
+
+
+
+
