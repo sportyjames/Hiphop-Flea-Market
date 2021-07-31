@@ -70,17 +70,18 @@ Django
 - in this case, create one app because we just want one API 
 - python manage.py startapp base
 
-Django stuff
+Django url routing 
 - we gonna work with views.py, where we gonna handle business logic 
 - model.py, where we create our dbs 
 - we need to tell our project about our app 
     - base.apps.BaseConfig
 - views.py 
     - create getRoutes
-        - setup how to trigger the this view
+        - configure urls to know when to trigger this view
 - create urls.py inside base
+    - this file in charge of connecting views to urls 
 - tell urls.py inside django about the urls.py inside base 
-- setup api routes 
+
 
 Install Django restful framework 
 - pip install djangorestframework
